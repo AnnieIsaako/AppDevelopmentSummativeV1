@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 2000;
+const port = 3000;
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -256,6 +256,6 @@ app.get('/allResponses/:id', function(req, res){
 });
 
 app.listen(port, () => {
-    // console.clear();
+    console.clear();
     console.log(`application is running on port ${port}`);
 });
