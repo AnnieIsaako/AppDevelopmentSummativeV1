@@ -98,22 +98,39 @@ app.get('/allListings', function(req, res) {
   }).catch(err => res.send(err));
 });
 
-app.get('/updateListing/:id', function(req, res){
-  const id = req.params.id;
+// app.patch('/updateListing/:id', function(req, res){
+//   const id = req.params.id;
+//     Listing.findById(id, function(err, listing){
+//
+//       const newListing = {
+//         itemName: req.body.itemName,
+//         itemPrice: req.body.itemPrice,
+//         itemDescription: req.body.itemDescription,
+//         itemImage: req.file.path
+//       };
+//
+//       Listing.updateOne({ _id : id }, newListing).then(result => {
+//           res.send(result);
+//       }).catch(err => res.send(err));
+//     }).catch(err => res.send('cannot find product with that id'));
+// });
+
+app.patch('/updateListing/:id', function(req, res){
+    const id = req.params.id;
     Listing.findById(id, function(err, listing){
-
-      const newListing = {
-        itemName: req.body.itemName,
-        itemPrice: req.body.itemPrice,
-        itemDescription: req.body.itemDescription,
-        itemImage: req.file.path
-      };
-
-      Listing.updateOne({ _id : id }, newListing).then(result => {
-          res.send(result);
-      }).catch(err => res.send(err));
+          const newListing = {
+            itemName: req.body.itemName,
+            itemPrice: req.body.itemPrice,
+            itemDescription: req.body.itemDescription,
+            itemImage: req.file.path
+          };
+          Listing.updateOne({ _id : id }, newProduct).then(result => {
+              res.send(result);
+          }).catch(err => res.send(err));
     }).catch(err => res.send('cannot find product with that id'));
-});
+})
+
+
 
 app.get('/listing/:id', function(req, res){
   const id = req.params.id;
@@ -153,7 +170,6 @@ app.post('/users', function(req, res) {
       const user = new User ({
         _id: new mongoose.Types.ObjectId(),
         username: req.body.username,
-        email: req.body.email,
         password: hash
       });
       user.save().then(data => {
