@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = function(req, file, cb) {
+  console.log('in fileFilter');
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
     cb(null, true);
   } else {
@@ -73,8 +74,6 @@ app.get('/', function(req, res) {
 // Annie codes untill here
 
 app.post('/listing', upload.single('uploadImage'),function(req, res){
-  console.log(req);
-  console.log(req.file);
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
     itemName: req.body.itemName,
@@ -98,38 +97,26 @@ app.get('/allListings', function(req, res) {
   }).catch(err => res.send(err));
 });
 
-// app.patch('/updateListing/:id', function(req, res){
-//   const id = req.params.id;
-//     Listing.findById(id, function(err, listing){
-//
-//       const newListing = {
-//         itemName: req.body.itemName,
-//         itemPrice: req.body.itemPrice,
-//         itemDescription: req.body.itemDescription,
-//         itemImage: req.file.path
-//       };
-//
-//       Listing.updateOne({ _id : id }, newListing).then(result => {
-//           res.send(result);
-//       }).catch(err => res.send(err));
-//     }).catch(err => res.send('cannot find product with that id'));
-// });
+// ************************************************************************
 
-app.patch('/updateListing/:id', function(req, res){
-    const id = req.params.id;
+app.patch('/listing/:id', upload.single('uploadImage'), function(req, res){
+  // console.log(req.body);
+  const id = req.params.id;
     Listing.findById(id, function(err, listing){
-          const newListing = {
-            itemName: req.body.itemName,
-            itemPrice: req.body.itemPrice,
-            itemDescription: req.body.itemDescription,
-            itemImage: req.file.path
-          };
-          Listing.updateOne({ _id : id }, newProduct).then(result => {
-              res.send(result);
-          }).catch(err => res.send(err));
-    }).catch(err => res.send('cannot find product with that id'));
-})
+      const newListing = {
+        itemName: req.body.itemName,
+        itemPrice: req.body.itemPrice,
+        itemDescription: req.body.itemDescription,
+      }
+      if (uploadImage = 'undefined') {
+        delete newListing.itemImage
+      }
 
+      Listing.updateOne({ _id : id }, newListing).then(result => {
+          res.send(result);
+      }).catch(err => res.send(err));
+    }).catch(err => res.send('cannot find an item in Digimart with that id'));
+});
 
 
 app.get('/listing/:id', function(req, res){
