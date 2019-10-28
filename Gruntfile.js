@@ -1,7 +1,18 @@
 module.exports = function(grunt) {
   grunt.initConfig({
-    // jshint for server
+    jshint: {
+      all: ['Gruntfile.js']
+    },
     // watch
+    watch: {
+      scripts: {
+        files: ['Gruntfile.js'],
+        tasks: ['jshint'],
+        options: {
+          spawn: false,
+        },
+      }
+    }
   });
 
   // load tasks
@@ -9,5 +20,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // register tasks
-  grunt.registerTask();
+  grunt.registerTask('default', 'watch');
 };

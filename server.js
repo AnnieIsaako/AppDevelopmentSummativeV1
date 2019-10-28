@@ -97,10 +97,7 @@ app.get('/allListings', function(req, res) {
   }).catch(err => res.send(err));
 });
 
-// ************************************************************************
-
 app.patch('/listing/:id', upload.single('uploadImage'), function(req, res){
-  // console.log(req.body);
   const id = req.params.id;
     Listing.findById(id, function(err, listing){
       const newListing = {
@@ -132,8 +129,6 @@ app.get('/allComments/:id', function(req, res){
       }
     })
 })
-
-// larissa codes untill here
 
 app.delete('/listing/:id', function(req, res) {
     const id = req.params.id;
@@ -182,10 +177,6 @@ app.post('/userLogin', function(req, res){
   });
 });
 
-
-// Annie codes untill here
-
-// Add Comment
 app.post('/sendComments', function(req, res) {
     const comments = new Comments({
       _id: new mongoose.Types.ObjectId(),
@@ -198,16 +189,12 @@ app.post('/sendComments', function(req, res) {
     }).catch(err => res.send(err));
 })
 
-// Get all comments
 app.get('/allComments', function(req, res){
     Comments.find().then(result => {
         res.send(result);
     })
 })
 
-
-
-//Get single comment based on ID
 app.post('/allComments/:id', function(req, res){
   const id = req.params.id;
   console.log(id);
@@ -221,9 +208,6 @@ app.post('/allComments/:id', function(req, res){
   })
 });
 
-// Katherine codes untill here
-
-// Annies code continues
 app.post('/sendResponse', function(req, res) {
     const responce = new Responce({
       _id: new mongoose.Types.ObjectId(),
@@ -256,6 +240,6 @@ app.get('/allResponses/:id', function(req, res){
 });
 
 app.listen(port, () => {
-    // console.clear();
+    console.clear();
     console.log(`application is running on port ${port}`);
 });
