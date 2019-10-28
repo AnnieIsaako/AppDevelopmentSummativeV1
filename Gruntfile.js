@@ -1,12 +1,12 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
-      all: ['Gruntfile.js']
+      all: ['Gruntfile.js', 'script.js']
     },
     // watch
     watch: {
       scripts: {
-        files: ['Gruntfile.js'],
+        files: ['Gruntfile.js', 'server.js'],
         tasks: ['jshint'],
         options: {
           spawn: false,

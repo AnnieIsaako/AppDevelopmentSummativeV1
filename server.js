@@ -19,8 +19,6 @@ const storage = multer.diskStorage({
     console.log(file);
     var filename = file.originalname;
     filename = filename.replace(/\s/g,'');
-    // const str = file.filename;
-    // str = str.replace(/\s+/g, '');
     cb(null, Date.now() + '-' + filename);
   }
 });
