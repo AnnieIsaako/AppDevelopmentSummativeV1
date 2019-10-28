@@ -106,12 +106,8 @@ app.patch('/listing/:id', upload.single('uploadImage'), function(req, res){
       const newListing = {
         itemName: req.body.itemName,
         itemPrice: req.body.itemPrice,
-        itemDescription: req.body.itemDescription,
+        itemDescription: req.body.itemDescription
       }
-      if (uploadImage = 'undefined') {
-        delete newListing.itemImage
-      }
-
       Listing.updateOne({ _id : id }, newListing).then(result => {
           res.send(result);
       }).catch(err => res.send(err));
@@ -260,6 +256,6 @@ app.get('/allResponses/:id', function(req, res){
 });
 
 app.listen(port, () => {
-    console.clear();
+    // console.clear();
     console.log(`application is running on port ${port}`);
 });
