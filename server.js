@@ -42,7 +42,6 @@ const config = require('./config.json');
 const Listing = require('./models/listings.js');
 const User = require('./models/users');
 const Comments = require('./models/comments.js');
-const Responce = require('./models/responce');
 
 
 mongoose.connect(`mongodb+srv://${config.mongoDBUser}:${config.mongoDBPassword}@${config.mongoClusterName}.mongodb.net/digimart?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true });
@@ -204,37 +203,6 @@ app.post('/allComments/:id', function(req, res){
       res.send('401')
     }
   })
-});
-
-app.post('/sendResponse', function(req, res) {
-    const responce = new Responce({
-      _id: new mongoose.Types.ObjectId(),
-      responceDescription: req.body.responceDescription
-    });
-
-    responce.save().then(result => {
-      res.send(result);
-    }).catch(err => res.send(err));
-});
-
-app.get('/allResponses', function(req, res) {
-  Responce.find().then(result => {
-    res.send(result);
-  });
-});
-
-app.get('/allResponses/:id', function(req, res){
-  const id = req.params.id;
-  console.log(id);
-
-  Responce.findById(id, function(err, responce) {
-    if (responce['user_id'] == req.body.userId) {
-      res.send(responce)
-    } else {
-      res.send('401')
-    }
-  })
-
 });
 
 app.listen(port, () => {
